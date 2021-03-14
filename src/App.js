@@ -12,6 +12,7 @@ function App() {
   const [user, setUser] = useState({});
   var provider = new firebase.auth.GoogleAuthProvider();
   var fbProvider = new firebase.auth.FacebookAuthProvider();
+  var gitProvider = new firebase.auth.GithubAuthProvider();
   const handleGoogleSignIn = () => {
     firebase.auth()
       .signInWithPopup(provider)
@@ -45,7 +46,25 @@ function App() {
         var errorMessage = error.message;
         var email = error.email;
         var credential = error.credential;
-        console.log(errorCode, errorMessage , email, credential);
+        console.log(errorCode, errorMessage, email, credential);
+      });
+  }
+  const handleGithubSignIn = () => {
+    firebase
+      .auth()
+      .signInWithPopup(gitProvider)
+      .then((result) => {
+        var credential = result.credential;
+        var token = credential.accessToken;
+        var user = result.user;
+        console.log('gitHub User', user);
+        setUser(user);
+      }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        console.log(errorCode, errorMessage, email, credential);
       });
   }
   return (
@@ -53,6 +72,8 @@ function App() {
       <button onClick={handleGoogleSignIn}>Sign In using Google</button>
       <br />
       <button onClick={handleFacebookSignIn}>Sign In using Facebook</button>
+      <br />
+      <button onClick={handleGithubSignIn}>Sign In using Github</button>
       <h3>User: {user.displayName}</h3>
       <img src={user.photoURL} alt="" />
     </div>
