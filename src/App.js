@@ -74,7 +74,8 @@ function App() {
       <button onClick={handleFacebookSignIn}>Sign In using Facebook</button>
       <br />
       <button onClick={handleGithubSignIn}>Sign In using Github</button>
-      <h3>User: {user.displayName}</h3>
+      <h3>User Name: {user.displayName}</h3>
+      <p>User image url: {user.photoURL}</p>
       <img src={user.photoURL} alt="" />
     </div>
   );
